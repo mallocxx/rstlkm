@@ -34,8 +34,9 @@ urlpatterns = [
     path("api/auth/login/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/auth/me/", me),
-    path("api/", include(router.urls)),
+    # Place custom endpoints that may overlap router prefixes BEFORE including router urls
     path("api/reports/stats_summary/", stats_summary, name="stats-summary"),
+    path("api/", include(router.urls)),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
 ]
