@@ -9,7 +9,7 @@ class VisitViewSet(viewsets.ModelViewSet):
     serializer_class = VisitSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ["apartment", "visitor"]
+    filterset_fields = ["id", "apartment", "visitor"]
     search_fields = [
         "apartment__building__address",
         "apartment__number",
@@ -29,3 +29,4 @@ class SurveyViewSet(viewsets.ModelViewSet):
         "provider_satisfaction",
         "interested_services",
     ]
+
