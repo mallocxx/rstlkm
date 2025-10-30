@@ -1,7 +1,7 @@
 <template>
 	<div class="space-y-6">
 		<h1 class="page-title">Анкета (инженер)</h1>
-		<div class="grid md:grid-cols-2 gap-6">
+		<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
 			<section class="card space-y-3">
 				<h2 class="card-title">Объект</h2>
 				<div class="space-y-2">
@@ -16,9 +16,9 @@
 						<option value="">— выбрать —</option>
 						<option v-for="b in buildings" :key="b.id" :value="b.id">{{ b.address }}</option>
 					</select>
-					<div class="flex gap-2">
+				<div class="flex flex-col sm:flex-row gap-2">
 						<input v-model="newAddress" placeholder="Новый адрес" class="input flex-1" />
-						<button @click="addBuilding" class="btn-success">Добавить дом</button>
+						<button @click="addBuilding" class="btn-success w-full sm:w-auto">Добавить дом</button>
 					</div>
 					<p class="text-xs opacity-70">GPS: {{ gpsText }}</p>
 				</div>
@@ -26,9 +26,9 @@
 					<label class="block text-sm opacity-80">Квартира</label>
 					<input v-model="apartmentNumber" placeholder="Например, 12" class="input" />
 				</div>
-				<div class="flex gap-2">
-					<button @click="saveVisit" class="btn-primary">Сохранить визит</button>
-					<button @click="loadLatestSurvey" :disabled="!apartmentId" class="btn-secondary">Загрузить последнюю анкету</button>
+				<div class="flex flex-col sm:flex-row gap-2">
+					<button @click="saveVisit" class="btn-primary w-full sm:w-auto">Сохранить визит</button>
+					<button @click="loadLatestSurvey" :disabled="!apartmentId" class="btn-secondary w-full sm:w-auto">Загрузить последнюю анкету</button>
 				</div>
 			</section>
 
@@ -62,7 +62,7 @@
 				<input v-model="contactPhone" placeholder="Контактный телефон" class="input" />
 				<input v-model.number="fairPrice" type="number" placeholder="Справедливая цена" class="input" />
 				<textarea v-model="comment" placeholder="Примечание" class="input"></textarea>
-				<button @click="saveSurvey" :disabled="!visitId" class="btn-success disabled:bg-slate-700">Сохранить анкету</button>
+				<button @click="saveSurvey" :disabled="!visitId" class="btn-success disabled:bg-slate-700 w-full sm:w-auto">Сохранить анкету</button>
 			</section>
 		</div>
 

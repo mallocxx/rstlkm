@@ -2,31 +2,31 @@
 <div>
   <h1 class="page-title">Отчеты (XLSX)</h1>
   <div class="card mb-5">
-    <form class="flex flex-wrap gap-3 items-end" @submit.prevent="generateReport">
+    <form class="flex flex-col sm:flex-row flex-wrap gap-3 items-stretch sm:items-end" @submit.prevent="generateReport">
       <div>
         <label class="text-xs">Город</label>
-        <select v-model="city" class="select min-w-[180px]">
+        <select v-model="city" class="select min-w-[160px] sm:min-w-[180px]">
           <option value="">— любой —</option>
           <option v-for="c in cities" :key="c.id" :value="c.id">{{ c.name }}</option>
         </select>
       </div>
       <div>
         <label class="text-xs">Дом</label>
-        <select v-model="building" class="select min-w-[220px]">
+        <select v-model="building" class="select min-w-[180px] sm:min-w-[220px]">
           <option value="">— любой —</option>
           <option v-for="b in buildings" :key="b.id" :value="b.id">{{ b.address }}</option>
         </select>
       </div>
       <div>
         <label class="text-xs">Удовлетворенность</label>
-        <select v-model="providerSatisfaction" class="select min-w-[160px]">
+        <select v-model="providerSatisfaction" class="select min-w-[140px] sm:min-w-[160px]">
           <option value="">— любой —</option>
           <option v-for="s in satisfactionOptions" :key="s" :value="s">{{ s }}</option>
         </select>
       </div>
       <div>
         <label class="text-xs">Интерес</label>
-        <select v-model="interestedService" class="select min-w-[160px]">
+        <select v-model="interestedService" class="select min-w-[140px] sm:min-w-[160px]">
           <option value="">— любой —</option>
           <option v-for="s in serviceOptions" :key="s" :value="s">{{ s }}</option>
         </select>
@@ -39,7 +39,7 @@
         <label class="text-xs">Дата по</label>
         <input type="date" v-model="dateTo" class="input" />
       </div>
-      <button class="btn-success ml-auto">Создать отчет</button>
+      <button class="btn-success ml-0 sm:ml-auto w-full sm:w-auto">Создать отчет</button>
     </form>
   </div>
 
@@ -48,10 +48,10 @@
   <div v-if="reports.length" class="mb-8">
     <h2 class="card-title">Последние отчеты</h2>
     <ul class="space-y-2">
-      <li v-for="r in reports" :key="r.id" class="card flex gap-3 items-center">
+      <li v-for="r in reports" :key="r.id" class="card flex flex-col sm:flex-row gap-2 sm:gap-3 sm:items-center">
         <span class="opacity-70 text-sm">{{ new Date(r.created_at).toLocaleString() }}</span>
         <a v-if="r.file_path" class="text-sky-400 hover:underline" :href="'/static/' + r.file_path" download>скачать XLSX</a>
-        <span class="text-xs opacity-80">фильтры: {{ JSON.stringify(r.filters, null, 1) }}</span>
+        <span class="text-xs opacity-80 break-all">фильтры: {{ JSON.stringify(r.filters, null, 1) }}</span>
       </li>
     </ul>
   </div>

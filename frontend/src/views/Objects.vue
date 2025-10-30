@@ -4,23 +4,23 @@
 
 		<!-- Filters -->
 		<div class="card">
-			<div class="flex flex-wrap gap-3 items-end">
+			<div class="flex flex-col sm:flex-row flex-wrap gap-3 items-stretch sm:items-end">
 				<div>
 					<label class="text-xs">Город</label>
-					<select v-model="cityId" class="select min-w-[200px]">
+					<select v-model="cityId" class="select min-w-[180px] sm:min-w-[200px]">
 						<option value="">— выбрать —</option>
 						<option v-for="c in cities" :key="c.id" :value="c.id">{{ c.name }}</option>
 					</select>
 				</div>
 				<div>
 					<label class="text-xs">Поиск по адресу</label>
-					<input v-model="query" class="input min-w-[240px]" placeholder="ул. Ленина" />
+					<input v-model="query" class="input min-w-[200px] sm:min-w-[240px]" placeholder="ул. Ленина" />
 				</div>
-				<button @click="loadBuildings" class="btn-primary">Найти</button>
+				<button @click="loadBuildings" class="btn-primary w-full sm:w-auto">Найти</button>
 			</div>
 		</div>
 
-		<div class="grid md:grid-cols-2 gap-6">
+		<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
 			<!-- List -->
 			<div class="card">
 				<h2 class="card-title">Дома</h2>
@@ -35,20 +35,20 @@
 			<!-- Map -->
 			<div class="card">
 				<h2 class="card-title">Карта</h2>
-				<div ref="mapEl" class="h-[420px] rounded overflow-hidden"></div>
+				<div ref="mapEl" class="h-64 md:h-[420px] rounded overflow-hidden"></div>
 			</div>
 		</div>
 
 		<!-- Apartment details and comments -->
-		<div class="grid md:grid-cols-2 gap-6">
+		<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
 			<div class="card space-y-2">
 				<h2 class="card-title">Квартиры выбранного дома</h2>
-				<div class="flex gap-2">
+				<div class="flex flex-col sm:flex-row gap-2">
 					<select v-model="apartmentId" class="select min-w-[200px]">
 						<option value="">— выбрать квартиру —</option>
 						<option v-for="a in apartments" :key="a.id" :value="a.id">Кв. {{ a.number }}</option>
 					</select>
-					<button @click="loadComments" :disabled="!apartmentId" class="btn-secondary">Показать комментарии</button>
+					<button @click="loadComments" :disabled="!apartmentId" class="btn-secondary w-full sm:w-auto">Показать комментарии</button>
 				</div>
 			</div>
 			<div class="card">

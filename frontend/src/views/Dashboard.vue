@@ -2,28 +2,34 @@
 <div>
   <h1 class="page-title">Статистика</h1>
   <div class="card mb-4">
-    <form class="flex gap-4 items-end" @submit.prevent>
+    <form class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-end" @submit.prevent>
       <div>
         <label class="text-xs">Город:</label>
-        <select v-model="city" class="select min-w-[200px]">
+        <select v-model="city" class="select min-w-[180px] sm:min-w-[200px]">
           <option value="">Все</option>
           <option v-for="c in cities" :key="c.id" :value="c.id">{{ c.name }}</option>
         </select>
       </div>
     </form>
   </div>
-  <div v-if="stats" class="grid md:grid-cols-2 gap-6">
+  <div v-if="stats" class="grid gap-4 sm:gap-6 md:grid-cols-2">
     <div class="card">
       <h2 class="card-title">Уровень удовлетворённости</h2>
-      <canvas ref="satChart"></canvas>
+      <div class="w-full overflow-x-auto">
+        <canvas ref="satChart" class="w-full h-64 md:h-80"></canvas>
+      </div>
     </div>
     <div class="card">
       <h2 class="card-title">Доля интересов к услугам</h2>
-      <canvas ref="intChart"></canvas>
+      <div class="w-full overflow-x-auto">
+        <canvas ref="intChart" class="w-full h-64 md:h-80"></canvas>
+      </div>
     </div>
     <div class="card md:col-span-2">
       <h2 class="card-title">Динамика визитов по дням</h2>
-      <canvas ref="dynChart"></canvas>
+      <div class="w-full overflow-x-auto">
+        <canvas ref="dynChart" class="w-full h-64 md:h-80"></canvas>
+      </div>
     </div>
   </div>
 </div>
