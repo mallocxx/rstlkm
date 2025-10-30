@@ -15,18 +15,24 @@ class Command(BaseCommand):
         admin.is_superuser = True
         admin.is_staff = True
         admin.save()
+        admin.profile.role = 'admin'; admin.profile.save()
         self.stdout.write(self.style.SUCCESS("Superuser admin/admin123"))
 
         eng1, _ = User.objects.get_or_create(username="engineer", defaults={"is_staff": True, "email": "engineer@example.com"})
         eng1.set_password("engineer123")
         eng1.save()
+        eng1.profile.role = 'engineer'; eng1.profile.save()
+
         eng2, _ = User.objects.get_or_create(username="engineer2", defaults={"is_staff": True, "email": "eng2@example.com"})
         eng2.set_password("eng2pass")
         eng2.save()
+        eng2.profile.role = 'engineer'; eng2.profile.save()
+
         sv, _ = User.objects.get_or_create(username="supervisor", defaults={"is_staff": True, "email": "sv@example.com"})
         sv.set_password("sv123")
         sv.is_staff = True
         sv.save()
+        sv.profile.role = 'supervisor'; sv.profile.save()
         
         # Города
         city_names = [
@@ -42,6 +48,7 @@ class Command(BaseCommand):
             cities.append(city)
         
         # Дома (buildings)
+        from random import randint
         buildings = []
         adrs = [
             ("ул. Ленина, 10", 42.9845, 47.5040),
@@ -50,7 +57,6 @@ class Command(BaseCommand):
             ("ул. Советская, 1", 42.0560, 48.2890),
         ]
         for i, city in enumerate(cities):
-            # 3 дома на город разными адресами
             for j in range(3):
                 a = adrs[j % len(adrs)]
                 addr = a[0] if j == 0 else a[0].replace(",", f", корп.{j}")
@@ -64,12 +70,10 @@ class Command(BaseCommand):
                 apt, _ = Apartment.objects.get_or_create(building=b, number=str(k))
                 apartments.append(apt)
 
-        # Визиты+анкеты с разными датами, интересами, статусами
         interests = [[], ["INTERNET"], ["TV"], ["CCTV"], ["NANNY"], ["INTERNET","TV"], ["TV","CCTV"], ["INTERNET","CCTV","NANNY"]]
         satisf = ["1","2","3","4","5","SAT","UNSAT"]
         now = timezone.now()
         for i, apt in enumerate(apartments):
-            # 2-4 визита на квартиру, с разными датами (равномерно за 60 дней)
             for z in range(random.randint(2,4)):
                 dt = now - timezone.timedelta(days=random.randint(0,60))
                 vis = Visit.objects.create(
@@ -95,4 +99,4 @@ class Command(BaseCommand):
                     fair_price=random.choice([300, 500, 700, 1000, 1200, None]),
                     comment=random.choice(["", "Просил перезвонить в июле", "Очень недоволен скоростью", "Оставил заявку на видеонаблюдение", "Интересуют скидки"]),
                 )
-        self.stdout.write(self.style.SUCCESS("Seeded rich demo: 5 городов, 10+ зданий, 2 инженера, supervisor, 100+ квартир, визиты/анкеты по датам и статусам."))
+        self.stdout.write(self.style.SUCCESS("Seeded rich demo with roles assigned."))

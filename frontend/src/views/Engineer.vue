@@ -1,48 +1,51 @@
 <template>
 	<div class="space-y-6">
-		<h1 class="text-xl font-semibold">Анкета (инженер)</h1>
+		<h1 class="page-title">Анкета (инженер)</h1>
 		<div class="grid md:grid-cols-2 gap-6">
-			<section class="space-y-3">
-				<h2 class="font-medium">Объект</h2>
+			<section class="card space-y-3">
+				<h2 class="card-title">Объект</h2>
 				<div class="space-y-2">
 					<label class="block text-sm opacity-80">Город</label>
-					<select v-model="cityId" class="w-full bg-slate-800 rounded px-3 py-2">
+					<select v-model="cityId" class="select">
 						<option v-for="c in cities" :key="c.id" :value="c.id">{{ c.name }}</option>
 					</select>
 				</div>
 				<div class="space-y-2">
 					<label class="block text-sm opacity-80">Дом</label>
-					<select v-model="buildingId" class="w-full bg-slate-800 rounded px-3 py-2">
+					<select v-model="buildingId" class="select">
 						<option value="">— выбрать —</option>
 						<option v-for="b in buildings" :key="b.id" :value="b.id">{{ b.address }}</option>
 					</select>
 					<div class="flex gap-2">
-						<input v-model="newAddress" placeholder="Новый адрес" class="flex-1 bg-slate-800 rounded px-3 py-2" />
-						<button @click="addBuilding" class="bg-emerald-600 hover:bg-emerald-500 px-3 py-2 rounded">Добавить дом</button>
+						<input v-model="newAddress" placeholder="Новый адрес" class="input flex-1" />
+						<button @click="addBuilding" class="btn-success">Добавить дом</button>
 					</div>
 					<p class="text-xs opacity-70">GPS: {{ gpsText }}</p>
 				</div>
 				<div class="space-y-2">
 					<label class="block text-sm opacity-80">Квартира</label>
-					<input v-model="apartmentNumber" placeholder="Например, 12" class="w-full bg-slate-800 rounded px-3 py-2" />
+					<input v-model="apartmentNumber" placeholder="Например, 12" class="input" />
 				</div>
-				<button @click="saveVisit" class="bg-sky-600 hover:bg-sky-500 px-3 py-2 rounded">Сохранить визит</button>
+				<div class="flex gap-2">
+					<button @click="saveVisit" class="btn-primary">Сохранить визит</button>
+					<button @click="loadLatestSurvey" :disabled="!apartmentId" class="btn-secondary">Загрузить последнюю анкету</button>
+				</div>
 			</section>
 
-			<section class="space-y-3">
-				<h2 class="font-medium">Анкета</h2>
-				<input v-model="clientProfile" placeholder="Портрет клиента" class="w-full bg-slate-800 rounded px-3 py-2" />
+			<section class="card space-y-3">
+				<h2 class="card-title">Анкета</h2>
+				<input v-model="clientProfile" placeholder="Портрет клиента" class="input" />
 				<div class="space-y-2">
 					<label class="block text-sm opacity-80">Чем пользуется</label>
 					<div class="flex flex-wrap gap-2 text-sm">
-						<label v-for="s in serviceOptions" :key="s" class="inline-flex items-center gap-1">
-							<input type="checkbox" :value="s" v-model="servicesCurrent" /> {{ s }}
+						<label v-for="s in serviceOptions" :key="s" class="inline-flex items-center gap-2">
+							<input type="checkbox" :value="s" v-model="servicesCurrent" /> <span>{{ s }}</span>
 						</label>
 					</div>
 				</div>
 				<div class="space-y-2">
 					<label class="block text-sm opacity-80">Удовлетворенность провайдером</label>
-					<select v-model="providerSatisfaction" class="w-full bg-slate-800 rounded px-3 py-2">
+					<select v-model="providerSatisfaction" class="select">
 						<option value="">—</option>
 						<option v-for="o in satisfactionOptions" :key="o" :value="o">{{ o }}</option>
 					</select>
@@ -50,21 +53,21 @@
 				<div class="space-y-2">
 					<label class="block text-sm opacity-80">Интерес к услугам</label>
 					<div class="flex flex-wrap gap-2 text-sm">
-						<label v-for="s in serviceOptions" :key="s" class="inline-flex items-center gap-1">
-							<input type="checkbox" :value="s" v-model="interestedServices" /> {{ s }}
+						<label v-for="s in serviceOptions" :key="s" class="inline-flex items-center gap-2">
+							<input type="checkbox" :value="s" v-model="interestedServices" /> <span>{{ s }}</span>
 						</label>
 					</div>
 				</div>
-				<input v-model="bestCallTime" placeholder="Удобное время для связи" class="w-full bg-slate-800 rounded px-3 py-2" />
-				<input v-model="contactPhone" placeholder="Контактный телефон" class="w-full bg-slate-800 rounded px-3 py-2" />
-				<input v-model.number="fairPrice" type="number" placeholder="Справедливая цена" class="w-full bg-slate-800 rounded px-3 py-2" />
-				<textarea v-model="comment" placeholder="Примечание" class="w-full bg-slate-800 rounded px-3 py-2"></textarea>
-				<button @click="saveSurvey" :disabled="!visitId" class="bg-emerald-600 disabled:bg-slate-700 px-3 py-2 rounded">Сохранить анкету</button>
+				<input v-model="bestCallTime" placeholder="Удобное время для связи" class="input" />
+				<input v-model="contactPhone" placeholder="Контактный телефон" class="input" />
+				<input v-model.number="fairPrice" type="number" placeholder="Справедливая цена" class="input" />
+				<textarea v-model="comment" placeholder="Примечание" class="input"></textarea>
+				<button @click="saveSurvey" :disabled="!visitId" class="btn-success disabled:bg-slate-700">Сохранить анкету</button>
 			</section>
 		</div>
 
-		<section v-if="apartmentId" class="space-y-2">
-			<h2 class="font-medium">Комментарии по квартире</h2>
+		<section v-if="apartmentId" class="card space-y-2">
+			<h2 class="card-title">Комментарии по квартире</h2>
 			<ul class="divide-y divide-slate-800">
 				<li v-for="v in comments" :key="v.id" class="py-2 text-sm">
 					<span class="opacity-70">{{ new Date(v.visited_at).toLocaleString() }}:</span>
@@ -76,10 +79,7 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { api, useAuthStore } from '../stores/auth'
-
-const auth = useAuthStore()
-if (auth.access) api.defaults.headers.common['Authorization'] = `Bearer ${auth.access}`
+import { api } from '../stores/auth'
 
 const cities = ref<any[]>([])
 const cityId = ref<number | ''>('')
@@ -146,12 +146,10 @@ async function addBuilding() {
 
 async function ensureApartment(): Promise<number | null> {
 	if (!buildingId.value || !apartmentNumber.value) return null
-	// naive: try to create; backend unique_together will dedupe
 	try {
 		const r = await api.post('/api/apartments/', { building: buildingId.value, number: apartmentNumber.value })
 		return r.data.id
 	} catch (e) {
-		// fallback: search
 		const list = await api.get('/api/apartments/', { params: { building: buildingId.value, search: apartmentNumber.value } })
 		const found = (list.data.results || list.data).find((a: any) => a.number === apartmentNumber.value)
 		return found?.id || null
@@ -172,6 +170,26 @@ async function saveVisit() {
 	}
 }
 
+async function loadLatestSurvey() {
+	if (!apartmentId.value) return
+	const r = await api.get('/api/visits/', { params: { apartment: apartmentId.value } })
+	const items = r.data.results || r.data
+	if (!items.length) return
+	const last = items[0]
+	visitId.value = last.id
+	if (last.survey) {
+		const s = last.survey
+		clientProfile.value = s.client_profile || ''
+		servicesCurrent.value = s.services_current || []
+		providerSatisfaction.value = s.provider_satisfaction || ''
+		interestedServices.value = s.interested_services || []
+		bestCallTime.value = s.best_call_time || ''
+		contactPhone.value = s.contact_phone || ''
+		fairPrice.value = s.fair_price || null
+		comment.value = s.comment || ''
+	}
+}
+
 async function saveSurvey() {
 	if (!visitId.value) return
 	const payload = {
@@ -186,7 +204,14 @@ async function saveSurvey() {
 		comment: comment.value,
 	}
 	try {
-		await api.post('/api/surveys/', payload)
+		// Try PATCH existing survey
+		const vis = await api.get(`/api/visits/`, { params: { id: visitId.value } })
+		const found = (vis.data.results || vis.data).find((v:any)=> v.id === visitId.value)
+		if (found && found.survey) {
+			await api.patch(`/api/surveys/${found.survey.id}/`, payload)
+		} else {
+			await api.post('/api/surveys/', payload)
+		}
 		await loadComments()
 	} catch (e) {
 		queueOffline('/api/surveys/', payload)

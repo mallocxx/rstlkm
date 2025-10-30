@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "corsheaders",
     # Local apps
+    "core",
     "users",
     "locations",
     "surveys",
@@ -95,7 +96,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",
+        "core.permissions.RolePermission",
     ),
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",

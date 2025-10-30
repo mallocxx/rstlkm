@@ -1,29 +1,29 @@
 <template>
-<div class="max-w-6xl mx-auto">
-  <h1 class="text-xl font-semibold mb-4">Статистика</h1>
-  <form class="flex gap-4 mb-4" @submit.prevent>
-    <div>
-      <label class="text-xs">Город:</label>
-      <select v-model="city" class="bg-slate-800 px-2 py-1 rounded">
-        <option value="">Все</option>
-        <option v-for="c in cities" :key="c.id" :value="c.id">{{ c.name }}</option>
-      </select>
+<div>
+  <h1 class="page-title">Статистика</h1>
+  <div class="card mb-4">
+    <form class="flex gap-4 items-end" @submit.prevent>
+      <div>
+        <label class="text-xs">Город:</label>
+        <select v-model="city" class="select min-w-[200px]">
+          <option value="">Все</option>
+          <option v-for="c in cities" :key="c.id" :value="c.id">{{ c.name }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div v-if="stats" class="grid md:grid-cols-2 gap-6">
+    <div class="card">
+      <h2 class="card-title">Уровень удовлетворённости</h2>
+      <canvas ref="satChart"></canvas>
     </div>
-  </form>
-  <div v-if="stats">
-    <div class="grid md:grid-cols-2 gap-8">
-      <div>
-        <h2 class="font-semibold mb-2">Уровень удовлетворённости</h2>
-        <canvas ref="satChart"></canvas>
-      </div>
-      <div>
-        <h2 class="font-semibold mb-2">Доля интересов к услугам</h2>
-        <canvas ref="intChart"></canvas>
-      </div>
-      <div class="md:col-span-2">
-        <h2 class="font-semibold mb-2">Динамика визитов по дням</h2>
-        <canvas ref="dynChart"></canvas>
-      </div>
+    <div class="card">
+      <h2 class="card-title">Доля интересов к услугам</h2>
+      <canvas ref="intChart"></canvas>
+    </div>
+    <div class="card md:col-span-2">
+      <h2 class="card-title">Динамика визитов по дням</h2>
+      <canvas ref="dynChart"></canvas>
     </div>
   </div>
 </div>

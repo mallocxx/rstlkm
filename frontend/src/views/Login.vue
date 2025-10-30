@@ -1,12 +1,14 @@
 <template>
-	<div class="max-w-sm mx-auto mt-16">
-		<h1 class="text-xl font-semibold mb-4">Вход</h1>
-		<form class="space-y-3" @submit.prevent="submit">
-			<input v-model="username" class="w-full px-3 py-2 bg-slate-800 rounded" placeholder="Логин" />
-			<input v-model="password" type="password" class="w-full px-3 py-2 bg-slate-800 rounded" placeholder="Пароль" />
-			<button class="w-full bg-sky-600 hover:bg-sky-500 px-3 py-2 rounded">Войти</button>
-		</form>
-		<p v-if="error" class="text-red-400 mt-2">{{ error }}</p>
+	<div class="max-w-sm mx-auto mt-20">
+		<div class="card">
+			<h1 class="page-title">Вход</h1>
+			<form class="space-y-3" @submit.prevent="submit">
+				<input v-model="username" class="input" placeholder="Логин" />
+				<input v-model="password" type="password" class="input" placeholder="Пароль" />
+				<button class="btn-primary w-full">Войти</button>
+			</form>
+			<p v-if="error" class="text-red-400 mt-3">{{ error }}</p>
+		</div>
 	</div>
 </template>
 <script setup lang="ts">
