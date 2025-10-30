@@ -1,0 +1,16 @@
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+build/
+.env
+.env.local
+*.pid
+*.log
+*.sock
+*.tmp
+*.sql
+*.sqlite
+.vscode/
+.idea/
+.DS_Store
