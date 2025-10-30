@@ -7,14 +7,22 @@
         <label class="text-xs">Город:</label>
         <select v-model="city" class="select min-w-[180px] sm:min-w-[200px]">
           <option value="">Все</option>
-          <option v-for="c in cities" :key="c?.id" :value="c?.id">{{ c?.name || '—' }}</option>
+          <option v-for="(c,i) in cities" :key="c?.id ?? i" :value="c?.id ?? ''">{{ c?.name || '—' }}</option>
         </select>
       </div>
     </form>
+    </div>
   </div>
+  <div v-if="stats && !loading && !error" class="text-sm text-gray-600 mb-2">Всего записей: {{ stats.total }}</div>
   <div v-if="loading" class="text-sm text-gray-500">Загрузка данных…</div>
   <div v-else-if="error" class="text-sm text-red-600">{{ error }}</div>
-  <div v-else-if="stats" class="grid gap-4 sm:gap-6 md:grid-cols-2">
+  <div v-else-if="stats">
+    <div class="grid gap-3 sm:gap-4 md:grid-cols-3 mb-4">
+      <div class="card"><div class="card-title mb-1">Всего анкет</div><div class="text-2xl font-semibold">{{ stats.total }}</div></div>
+      <div class="card"><div class="card-title mb-1">Групп по оценке</div><div class="text-sm text-gray-600">{{ Object.keys(stats.by_satisfaction || {}).length }}</div></div>
+      <div class="card"><div class="card-title mb-1">Интересов</div><div class="text-sm text-gray-600">{{ Object.keys(stats.by_interest || {}).length }}</div></div>
+    </div>
+    <div class="grid gap-4 sm:gap-6 md:grid-cols-2">
     <div class="card">
       <h2 class="card-title">Уровень удовлетворённости</h2>
       <div class="w-full overflow-x-auto" v-if="hasSatisfaction">
@@ -36,7 +44,7 @@
       </div>
       <p v-else class="text-sm text-gray-500">Нет данных для отображения.</p>
     </div>
-  </div>
+    </div>
 </div>
 </template>
 <script setup lang="ts">
