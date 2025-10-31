@@ -1,6 +1,6 @@
 <template>
 	<div class="space-y-6">
-		<h1 class="page-title">Анкета (инженер)</h1>
+		<h1 class="page-title">Анкета</h1>
 		<div class="grid gap-4 sm:gap-6 md:grid-cols-2">
 			<section class="card space-y-3">
 				<h2 class="card-title">Объект</h2>
@@ -104,7 +104,7 @@ const fairPrice = ref<number | null>(null)
 const comment = ref('')
 
 const serviceOptions = ['INTERNET','TV','CCTV','NANNY']
-const satisfactionOptions = ['1','2','3','4','5','SAT','UNSAT']
+const satisfactionOptions = ['1','2','3','4','5','удовлетворен','не удовлетворен']
 
 const visitId = ref<number | null>(null)
 const comments = ref<any[]>([])

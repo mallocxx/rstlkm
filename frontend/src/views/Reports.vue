@@ -1,33 +1,33 @@
 <template>
 <div>
-  <h1 class="page-title">Отчеты (XLSX)</h1>
+  <h1 class="page-title">Отчеты</h1>
   <div class="card mb-5">
     <form class="flex flex-col sm:flex-row flex-wrap gap-3 items-stretch sm:items-end" @submit.prevent="generateReport">
       <div>
         <label class="text-xs">Город</label>
         <select v-model="city" class="select min-w-[160px] sm:min-w-[180px]">
-          <option value="">— любой —</option>
+          <option value="">— не указан —</option>
           <option v-for="c in cities" :key="c.id" :value="c.id">{{ c.name }}</option>
         </select>
       </div>
       <div>
         <label class="text-xs">Дом</label>
         <select v-model="building" class="select min-w-[180px] sm:min-w-[220px]">
-          <option value="">— любой —</option>
+          <option value="">— не указан —</option>
           <option v-for="b in buildings" :key="b.id" :value="b.id">{{ b.address }}</option>
         </select>
       </div>
       <div>
         <label class="text-xs">Удовлетворенность</label>
         <select v-model="providerSatisfaction" class="select min-w-[140px] sm:min-w-[160px]">
-          <option value="">— любой —</option>
+          <option value="">— не указан —</option>
           <option v-for="s in satisfactionOptions" :key="s" :value="s">{{ s }}</option>
         </select>
       </div>
       <div>
         <label class="text-xs">Интерес</label>
         <select v-model="interestedService" class="select min-w-[140px] sm:min-w-[160px]">
-          <option value="">— любой —</option>
+          <option value="">— не указан —</option>
           <option v-for="s in serviceOptions" :key="s" :value="s">{{ s }}</option>
         </select>
       </div>
