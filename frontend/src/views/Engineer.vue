@@ -62,7 +62,7 @@
 				<input v-model="contactPhone" placeholder="Контактный телефон" class="input" />
 				<input v-model.number="fairPrice" type="number" placeholder="Справедливая цена" class="input" />
 				<textarea v-model="comment" placeholder="Примечание" class="input"></textarea>
-				<button @click="saveSurvey" :disabled="!visitId" class="btn-success disabled:bg-slate-700 w-full sm:w-auto">Сохранить анкету</button>
+				<button @click="saveSurvey" :disabled="!visitId" class="btn-success disabled:bg-gray-400 w-full sm:w-auto">Сохранить анкету</button>
 			</section>
 		</div>
 
