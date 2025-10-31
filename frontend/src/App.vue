@@ -4,7 +4,7 @@
 			<div class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex items-center justify-between">
 				<div class="flex items-center gap-2">
 					<div class="h-6 w-6 rounded bg-sky-500"></div>
-					<div class="font-semibold tracking-tight text-gray-900">TooAccurate</div>
+					<div class="font-semibold tracking-tight text-gray-900">FieldSales</div>
 				</div>
 				<div class="flex flex-wrap items-center gap-1 text-sm">
 					<router-link to="/" class="px-2 sm:px-3 py-2 rounded hover:bg-gray-100 text-gray-700" active-class="bg-gray-100 text-gray-900 font-medium" exact-active-class="bg-gray-100 text-gray-900 font-medium">Дашборд</router-link>
